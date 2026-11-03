@@ -1,0 +1,11 @@
+target/
+cp.txt
+*.class
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+.DS_Store
+__pycache__/
