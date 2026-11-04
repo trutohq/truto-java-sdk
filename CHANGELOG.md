@@ -1,13 +1,13 @@
 # Changelog
 
+All notable changes to this project are documented here. The format follows
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
+[Semantic Versioning](https://semver.org/).
+
 ## Unreleased
 
 - Fix: listing the full integration catalog no longer throws `TrutoDecodeException`. `IntegrationResourceMethod.getBody()` and `EnvironmentIntegrationResourceMethod.getBody()` now return a `JsonNode` instead of a `Map`, because some integrations (greythr) send a JSON array there.
 - Fixes to the published spec now live in `spec/overlay.json` (OpenAPI Overlay), applied when regenerating models.
-
-All notable changes to this project are documented here. The format follows
-[Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
-[Semantic Versioning](https://semver.org/).
 
 ## [0.1.0] - 2026-11-03
 
