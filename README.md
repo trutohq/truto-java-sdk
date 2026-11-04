@@ -215,10 +215,15 @@ Models in `src/main/java/one/truto/sdk/models` are generated from
 hand-written). After updating the spec:
 
 ```bash
-python3 codegen/normalize_spec.py spec/openapi.json > codegen/models.json
+python3 codegen/normalize_spec.py spec/openapi.json spec/overlay.json > codegen/models.json
 python3 codegen/generate_java.py codegen/models.json src/main/java/one/truto/sdk/models
 mvn verify
 ```
+
+Where the published spec doesn't match what the API returns, the fix lives
+in `spec/overlay.json`, an [OpenAPI Overlay](https://spec.openapis.org/overlay/v1.0.0)
+applied before generation. For example, a resource method's `body` is a
+`JsonNode`, because some integrations send a JSON array there.
 
 Both scripts need only the Python 3 standard library. Generated files for
 models that disappear from the spec are deleted.

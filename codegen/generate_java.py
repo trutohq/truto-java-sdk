@@ -3,7 +3,7 @@
 
 Usage (from the repo root):
 
-    python3 codegen/normalize_spec.py spec/openapi.json > codegen/models.json
+    python3 codegen/normalize_spec.py spec/openapi.json spec/overlay.json > codegen/models.json
     python3 codegen/generate_java.py codegen/models.json src/main/java/one/truto/sdk/models
 
 Every file this script writes starts with a "DO NOT EDIT" header. Files in the

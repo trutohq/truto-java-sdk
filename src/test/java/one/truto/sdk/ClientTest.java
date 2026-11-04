@@ -23,6 +23,8 @@ import one.truto.sdk.models.Documentation;
 import one.truto.sdk.models.EnvironmentIntegrationDeleteResponse;
 import one.truto.sdk.models.IntegratedAccountResponse;
 import one.truto.sdk.models.IntegratedAccountStatus;
+import one.truto.sdk.models.IntegrationResourceMethod;
+import one.truto.sdk.models.IntegrationResponse;
 import one.truto.sdk.models.Log;
 import one.truto.sdk.models.Ping;
 import one.truto.sdk.models.TenantCreateRequest;
@@ -398,5 +400,34 @@ class ClientTest {
         public String id;
         @com.fasterxml.jackson.annotation.JsonProperty("first_name")
         public String firstName;
+    }
+
+    /**
+     * integration_catalog_page.json is trimmed from the live catalog: greythr sends a JSON
+     * array as a resource method body, and nativebridge uses a null header value to remove
+     * an inherited header. The array body used to fail decoding.
+     */
+    @Test
+    void integrationCatalogWithArrayBodyAndNullHeaderDecodes() throws Exception {
+        String page;
+        try (java.io.InputStream in = getClass().getResourceAsStream("/integration_catalog_page.json")) {
+            page = new String(in.readAllBytes(), StandardCharsets.UTF_8);
+        }
+        server.json(200, page);
+        List<IntegrationResponse> all = client.integrations().list().toList();
+        assertEquals(2, all.size());
+
+        IntegrationResourceMethod lov = all.get(0).getConfig().getResources().get("lov-greythr").get("list");
+        assertTrue(lov.getBody().isArray());
+        assertEquals("lov::transitiontype", lov.getBody().get(0).asText());
+        IntegrationResourceMethod create = all.get(0).getConfig().getResources().get("employees").get("create");
+        assertEquals("{{body.name}}", create.getBody().get("name").asText());
+
+        IntegrationResourceMethod app = all.get(1).getConfig().getResources().get("applications").get("create");
+        assertTrue(app.getHeaders().containsKey("Content-Type"));
+        assertNull(app.getHeaders().get("Content-Type"));
+        assertEquals("upload", app.getHeaders().get("X-Mode"));
+        // The null header means "remove the inherited header" and must survive re-encoding.
+        assertTrue(Json.toJsonString(app).contains("\"Content-Type\":null"), Json.toJsonString(app));
     }
 }
