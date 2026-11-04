@@ -67,12 +67,6 @@ public final class IntegrationResourceMethod {
     private IntegrationResourceMethodQueryArrayFormat queryArrayFormat;
 
     /**
-     * Static or templated request body for `post`/`put`/`patch` methods. Values may be any JSON type and may include placeholders. Use `$truto_merge` with `:json` to deep-merge an entire object — see placeholder syntax.
-     */
-    @JsonProperty("body")
-    private Map<String, JsonNode> body;
-
-    /**
      * JSON-schema-style declaration of supported query params used by Truto's MCP/tooling. May be a JSONata string for dynamic schemas, or a `JsonSchemaObject`.
      */
     @JsonProperty("query_schema")
@@ -234,6 +228,12 @@ public final class IntegrationResourceMethod {
      */
     @JsonProperty("before")
     private JsonNode before;
+
+    /**
+     * Static or templated request body for `post`/`put`/`patch` methods. Any JSON value (usually an object, sometimes an array) and may include placeholders. Use `$truto_merge` with `:json` to deep-merge an entire object; see placeholder syntax.
+     */
+    @JsonProperty("body")
+    private JsonNode body;
 
     /** Creates an empty instance. */
     public IntegrationResourceMethod() {
@@ -469,35 +469,6 @@ public final class IntegrationResourceMethod {
      */
     public IntegrationResourceMethod queryArrayFormat(IntegrationResourceMethodQueryArrayFormat value) {
         this.queryArrayFormat = value;
-        return this;
-    }
-
-    /**
-     * Returns {@code body}.
-     *
-     * @return the value
-     */
-    public Map<String, JsonNode> getBody() {
-        return body;
-    }
-
-    /**
-     * Sets {@code body}.
-     *
-     * @param value the new value
-     */
-    public void setBody(Map<String, JsonNode> value) {
-        this.body = value;
-    }
-
-    /**
-     * Sets {@code body} and returns this object.
-     *
-     * @param value the new value
-     * @return this
-     */
-    public IntegrationResourceMethod body(Map<String, JsonNode> value) {
-        this.body = value;
         return this;
     }
 
@@ -1197,6 +1168,35 @@ public final class IntegrationResourceMethod {
         return this;
     }
 
+    /**
+     * Returns {@code body}.
+     *
+     * @return the value
+     */
+    public JsonNode getBody() {
+        return body;
+    }
+
+    /**
+     * Sets {@code body}.
+     *
+     * @param value the new value
+     */
+    public void setBody(JsonNode value) {
+        this.body = value;
+    }
+
+    /**
+     * Sets {@code body} and returns this object.
+     *
+     * @param value the new value
+     * @return this
+     */
+    public IntegrationResourceMethod body(JsonNode value) {
+        this.body = value;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -1214,7 +1214,6 @@ public final class IntegrationResourceMethod {
             && Objects.equals(headers, other.headers)
             && Objects.equals(query, other.query)
             && Objects.equals(queryArrayFormat, other.queryArrayFormat)
-            && Objects.equals(body, other.body)
             && Objects.equals(querySchema, other.querySchema)
             && Objects.equals(bodySchema, other.bodySchema)
             && Objects.equals(bodyFormat, other.bodyFormat)
@@ -1238,12 +1237,13 @@ public final class IntegrationResourceMethod {
             && Objects.equals(scopesAnyOf, other.scopesAnyOf)
             && Objects.equals(permissionVocabulary, other.permissionVocabulary)
             && Objects.equals(mcpAnnotations, other.mcpAnnotations)
-            && Objects.equals(before, other.before);
+            && Objects.equals(before, other.before)
+            && Objects.equals(body, other.body);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(baseUrl, method, path, paginationPath, authorization, headers, query, queryArrayFormat, body, querySchema, bodySchema, bodyFormat, bodyFormatConfig, responseSchema, responsePath, pagination, addQueryToBody, ignoreBodyInPagination, ignoreBody, setBodyToNull, noAuth, examples, ignoreCredentialsOnRedirect, apiResponseFormat, throwErrorOnParseError, errorExpression, description, apiDocumentationUrl, scopes, scopesAnyOf, permissionVocabulary, mcpAnnotations, before);
+        return Objects.hash(baseUrl, method, path, paginationPath, authorization, headers, query, queryArrayFormat, querySchema, bodySchema, bodyFormat, bodyFormatConfig, responseSchema, responsePath, pagination, addQueryToBody, ignoreBodyInPagination, ignoreBody, setBodyToNull, noAuth, examples, ignoreCredentialsOnRedirect, apiResponseFormat, throwErrorOnParseError, errorExpression, description, apiDocumentationUrl, scopes, scopesAnyOf, permissionVocabulary, mcpAnnotations, before, body);
     }
 
     @Override

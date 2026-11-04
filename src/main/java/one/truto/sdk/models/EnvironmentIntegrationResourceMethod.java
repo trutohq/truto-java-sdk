@@ -49,12 +49,6 @@ public final class EnvironmentIntegrationResourceMethod {
     private EnvironmentIntegrationResourceMethodQueryArrayFormat queryArrayFormat;
 
     /**
-     * Override the request body for this method. Values may include JSONata placeholders.
-     */
-    @JsonProperty("body")
-    private Map<String, JsonNode> body;
-
-    /**
      * Override the query schema. May be a JSONata string or a `JsonSchemaObject`.
      */
     @JsonProperty("query_schema")
@@ -153,6 +147,12 @@ public final class EnvironmentIntegrationResourceMethod {
      */
     @JsonProperty("before")
     private JsonNode before;
+
+    /**
+     * Override the request body for this method. Any JSON value; may include JSONata placeholders.
+     */
+    @JsonProperty("body")
+    private JsonNode body;
 
     /** Creates an empty instance. */
     public EnvironmentIntegrationResourceMethod() {
@@ -388,35 +388,6 @@ public final class EnvironmentIntegrationResourceMethod {
      */
     public EnvironmentIntegrationResourceMethod queryArrayFormat(EnvironmentIntegrationResourceMethodQueryArrayFormat value) {
         this.queryArrayFormat = value;
-        return this;
-    }
-
-    /**
-     * Returns {@code body}.
-     *
-     * @return the value
-     */
-    public Map<String, JsonNode> getBody() {
-        return body;
-    }
-
-    /**
-     * Sets {@code body}.
-     *
-     * @param value the new value
-     */
-    public void setBody(Map<String, JsonNode> value) {
-        this.body = value;
-    }
-
-    /**
-     * Sets {@code body} and returns this object.
-     *
-     * @param value the new value
-     * @return this
-     */
-    public EnvironmentIntegrationResourceMethod body(Map<String, JsonNode> value) {
-        this.body = value;
         return this;
     }
 
@@ -1116,6 +1087,35 @@ public final class EnvironmentIntegrationResourceMethod {
         return this;
     }
 
+    /**
+     * Returns {@code body}.
+     *
+     * @return the value
+     */
+    public JsonNode getBody() {
+        return body;
+    }
+
+    /**
+     * Sets {@code body}.
+     *
+     * @param value the new value
+     */
+    public void setBody(JsonNode value) {
+        this.body = value;
+    }
+
+    /**
+     * Sets {@code body} and returns this object.
+     *
+     * @param value the new value
+     * @return this
+     */
+    public EnvironmentIntegrationResourceMethod body(JsonNode value) {
+        this.body = value;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -1133,7 +1133,6 @@ public final class EnvironmentIntegrationResourceMethod {
             && Objects.equals(headers, other.headers)
             && Objects.equals(query, other.query)
             && Objects.equals(queryArrayFormat, other.queryArrayFormat)
-            && Objects.equals(body, other.body)
             && Objects.equals(querySchema, other.querySchema)
             && Objects.equals(bodySchema, other.bodySchema)
             && Objects.equals(bodyFormat, other.bodyFormat)
@@ -1157,12 +1156,13 @@ public final class EnvironmentIntegrationResourceMethod {
             && Objects.equals(scopesAnyOf, other.scopesAnyOf)
             && Objects.equals(permissionVocabulary, other.permissionVocabulary)
             && Objects.equals(mcpAnnotations, other.mcpAnnotations)
-            && Objects.equals(before, other.before);
+            && Objects.equals(before, other.before)
+            && Objects.equals(body, other.body);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(baseUrl, method, path, paginationPath, authorization, headers, query, queryArrayFormat, body, querySchema, bodySchema, bodyFormat, bodyFormatConfig, responseSchema, responsePath, pagination, addQueryToBody, ignoreBodyInPagination, ignoreBody, setBodyToNull, noAuth, examples, ignoreCredentialsOnRedirect, apiResponseFormat, throwErrorOnParseError, errorExpression, description, apiDocumentationUrl, scopes, scopesAnyOf, permissionVocabulary, mcpAnnotations, before);
+        return Objects.hash(baseUrl, method, path, paginationPath, authorization, headers, query, queryArrayFormat, querySchema, bodySchema, bodyFormat, bodyFormatConfig, responseSchema, responsePath, pagination, addQueryToBody, ignoreBodyInPagination, ignoreBody, setBodyToNull, noAuth, examples, ignoreCredentialsOnRedirect, apiResponseFormat, throwErrorOnParseError, errorExpression, description, apiDocumentationUrl, scopes, scopesAnyOf, permissionVocabulary, mcpAnnotations, before, body);
     }
 
     @Override
