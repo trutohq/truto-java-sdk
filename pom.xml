@@ -167,11 +167,10 @@
             <extensions>true</extensions>
             <configuration>
               <publishingServerId>central</publishingServerId>
-              <!-- Uploads and validates, then waits for a manual "Publish"
-                   click in the Central Portal. Set to true once the first
-                   release has gone through. -->
-              <autoPublish>false</autoPublish>
-              <waitUntil>validated</waitUntil>
+              <!-- Publish as soon as Central validates the upload, and keep
+                   the release job running until the artifacts are live. -->
+              <autoPublish>true</autoPublish>
+              <waitUntil>published</waitUntil>
             </configuration>
           </plugin>
         </plugins>
