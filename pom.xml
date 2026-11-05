@@ -11,7 +11,7 @@
 
   <name>Truto Java SDK</name>
   <description>Java client for the Truto REST API.</description>
-  <url>https://truto.one</url>
+  <url>https://github.com/trutohq/truto-java-sdk</url>
 
   <licenses>
     <license>
@@ -19,6 +19,27 @@
       <url>https://opensource.org/licenses/MIT</url>
     </license>
   </licenses>
+
+  <developers>
+    <developer>
+      <id>trutohq</id>
+      <name>Truto</name>
+      <organization>Truto</organization>
+      <organizationUrl>https://truto.one</organizationUrl>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:https://github.com/trutohq/truto-java-sdk.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/trutohq/truto-java-sdk.git</developerConnection>
+    <url>https://github.com/trutohq/truto-java-sdk</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/trutohq/truto-java-sdk/issues</url>
+  </issueManagement>
 
   <properties>
     <maven.compiler.release>11</maven.compiler.release>
@@ -76,4 +97,85 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <!--
+      Maven Central release: mvn -P release deploy
+      Builds the sources and javadoc jars Central requires, signs every
+      artifact with GPG (key imported by the release workflow, passphrase in
+      MAVEN_GPG_PASSPHRASE) and uploads through the Central Portal using the
+      "central" server credentials from settings.xml.
+    -->
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>3.3.1</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.12.0</version>
+            <configuration>
+              <release>${maven.compiler.release}</release>
+              <quiet>true</quiet>
+            </configuration>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.2.8</version>
+            <configuration>
+              <gpgArguments>
+                <arg>--pinentry-mode</arg>
+                <arg>loopback</arg>
+              </gpgArguments>
+            </configuration>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>0.12.0</version>
+            <extensions>true</extensions>
+            <configuration>
+              <publishingServerId>central</publishingServerId>
+              <!-- Uploads and validates, then waits for a manual "Publish"
+                   click in the Central Portal. Set to true once the first
+                   release has gone through. -->
+              <autoPublish>false</autoPublish>
+              <waitUntil>validated</waitUntil>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

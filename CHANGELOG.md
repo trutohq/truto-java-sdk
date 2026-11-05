@@ -4,12 +4,7 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
-## Unreleased
-
-- Fix: listing the full integration catalog no longer throws `TrutoDecodeException`. `IntegrationResourceMethod.getBody()` and `EnvironmentIntegrationResourceMethod.getBody()` now return a `JsonNode` instead of a `Map`, because some integrations (greythr) send a JSON array there.
-- Fixes to the published spec now live in `spec/overlay.json` (OpenAPI Overlay), applied when regenerating models.
-
-## [0.1.0] - 2026-11-03
+## [0.1.0] - Unreleased
 
 ### Added
 
@@ -32,3 +27,8 @@ All notable changes to this project are documented here. The format follows
   returning `CompletableFuture` for the unified, proxy and custom APIs.
 - 475 model classes generated from Truto's OpenAPI spec, with lenient
   decoding, open enums and union wrappers.
+
+### Notes
+
+- A resource method's `body` (`IntegrationResourceMethod`, `EnvironmentIntegrationResourceMethod`) is a `JsonNode`, because live integrations send arrays there as well as objects.
+- Fixes to the published spec live in `spec/overlay.json` (OpenAPI Overlay), applied when regenerating models.

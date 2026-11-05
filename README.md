@@ -11,13 +11,7 @@ proxy, custom and MCP data-plane APIs.
 
 ## Install
 
-The artifact is not on Maven Central yet. Build and install it locally:
-
-```bash
-mvn install
-```
-
-then depend on it:
+Maven:
 
 ```xml
 <dependency>
@@ -27,7 +21,13 @@ then depend on it:
 </dependency>
 ```
 
-Gradle: `implementation("one.truto:truto-java-sdk:0.1.0")` (with `mavenLocal()`).
+Gradle:
+
+```kotlin
+implementation("one.truto:truto-java-sdk:0.1.0")
+```
+
+Requires Java 11 or later. The only runtime dependency is Jackson.
 
 ## Quick start
 
